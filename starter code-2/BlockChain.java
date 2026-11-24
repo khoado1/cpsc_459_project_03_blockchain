@@ -9,6 +9,10 @@ import java.util.HashMap;
 public class BlockChain {
    public static final int CUT_OFF_AGE = 10;
 
+   private HashMap<ByteArrayWrapper, BlockNode> blockMap = new HashMap<>();
+   private BlockNode maxHeightNode = null;
+   private TransactionPool txPool = new TransactionPool();
+
    // all information required in handling a block in block chain
    private class BlockNode {
       public Block b;
@@ -36,32 +40,34 @@ public class BlockChain {
       }
    }
 
+   // TODO(Member Khoa Do): Implement the constructor of BlockChain
    /* create an empty block chain with just a genesis block.
     * Assume genesis block is a valid block
     */
    public BlockChain(Block genesisBlock) {
-      // IMPLEMENT THIS
+      throw new UnsupportedOperationException("TODO: Member Khoa Do");
    }
 
    /* Get the maximum height block
     */
    public Block getMaxHeightBlock() {
-      // IMPLEMENT THIS
+      return maxHeightNode.b;
    }
    
    /* Get the UTXOPool for mining a new block on top of 
     * max height block
     */
    public UTXOPool getMaxHeightUTXOPool() {
-      // IMPLEMENT THIS
+      return maxHeightNode.getUTXOPoolCopy();
    }
    
    /* Get the transaction pool to mine a new block
     */
    public TransactionPool getTransactionPool() {
-      // IMPLEMENT THIS
+      return txPool;
    }
 
+   // TODO(Member 2): Implement block acceptance.
    /* Add a block to block chain if it is valid.
     * For validity, all transactions should be valid
     * and block should be at height > (maxHeight - CUT_OFF_AGE).
@@ -71,12 +77,28 @@ public class BlockChain {
     * Return true of block is successfully added
     */
    public boolean addBlock(Block b) {
-       // IMPLEMENT THIS
+      throw new UnsupportedOperationException("TODO: Member 2");
    }
 
+   // TODO(Member 3): Add transaction to global transaction pool.
    /* Add a transaction in transaction pool
     */
    public void addTransaction(Transaction tx) {
-      // IMPLEMENT THIS
+      throw new UnsupportedOperationException("TODO: Member 3");
+   }
+
+   // TODO(Member 2): Implement obsolete block pruning.
+   private void pruneOldBlocks() {
+      throw new UnsupportedOperationException("TODO: Member 2");
+   }
+
+   // TODO(Member 3): Validate block transactions and compute UTXO pool.
+   private UTXOPool validateBlockTransactions(Block b, UTXOPool parentPool) {
+      throw new UnsupportedOperationException("TODO: Member 3");
+   }
+
+   // TODO(Member 3): Remove transactions included transactions from global pool.
+   private void removeIncludedTransactions(Block b) {
+      throw new UnsupportedOperationException("TODO: Member 3");
    }
 }

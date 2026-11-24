@@ -1,0 +1,14 @@
+{
+  "java.project.sourcePaths": [
+    "starter code-2",
+    "grading-2"
+  ],
+  "java.project.outputPath": "bin",
+  "java.project.referencedLibraries": [
+    "starter code-2/rsa.jar",
+    "grading-2/rsa.jar",
+    "grading-2/algs4.jar",
+    "grading-2/blockChainGrader.jar",
+    "grading-2/scroogeCoinGrader.jar"
+  ]
+}

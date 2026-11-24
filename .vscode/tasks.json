@@ -1,0 +1,65 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Java: compile starter code",
+      "type": "shell",
+      "command": "javac",
+      "args": [
+        "-cp",
+        "rsa.jar:.",
+        "*.java"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/starter code-2"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": {
+        "owner": "java",
+        "fileLocation": [
+          "relative",
+          "${workspaceFolder}/starter code-2"
+        ],
+        "pattern": {
+          "regexp": "^([^:]+\\.java):(\\d+):\\s*(error|warning):\\s*(.*)$",
+          "file": 1,
+          "line": 2,
+          "severity": 3,
+          "message": 4
+        }
+      }
+    },
+    {
+      "label": "Java: compile grading test",
+      "type": "shell",
+      "command": "javac",
+      "args": [
+        "-cp",
+        "blockChainGrader.jar:scroogeCoinGrader.jar:algs4.jar:rsa.jar:../starter code-2:.",
+        "-sourcepath",
+        "../starter code-2",
+        "DropboxTestBlockChain.java"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/grading-2"
+      },
+      "problemMatcher": {
+        "owner": "java",
+        "fileLocation": [
+          "relative",
+          "${workspaceFolder}/grading-2"
+        ],
+        "pattern": {
+          "regexp": "^([^:]+\\.java):(\\d+):\\s*(error|warning):\\s*(.*)$",
+          "file": 1,
+          "line": 2,
+          "severity": 3,
+          "message": 4
+        }
+      }
+    }
+  ]
+}

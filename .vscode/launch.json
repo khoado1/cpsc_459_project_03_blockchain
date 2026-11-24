@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Run/Debug DropboxTestBlockChain",
+      "request": "launch",
+      "mainClass": "DropboxTestBlockChain",
+      "cwd": "${workspaceFolder}/grading-2",
+      "classPaths": [
+        "${workspaceFolder}/grading-2",
+        "${workspaceFolder}/bin",
+        "${workspaceFolder}/starter code-2",
+        "${workspaceFolder}/grading-2/blockChainGrader.jar",
+        "${workspaceFolder}/grading-2/scroogeCoinGrader.jar",
+        "${workspaceFolder}/grading-2/algs4.jar",
+        "${workspaceFolder}/grading-2/rsa.jar"
+      ],
+      "preLaunchTask": "Java: compile grading test"
+    }
+  ]
+}
