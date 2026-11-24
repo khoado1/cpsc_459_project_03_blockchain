@@ -77,7 +77,34 @@ public class BlockChain {
     * Return true of block is successfully added
     */
    public boolean addBlock(Block b) {
-      throw new UnsupportedOperationException("TODO: Member 2");
+      if (b == null || b.getHash() == null || b.getPrevBlockHash() == null)
+         return false;
+   
+      ByteArrayWrapper blockHash = new ByteArrayWrapper(b.getHash());
+      if (blockMap.containsKey(blockHash))
+         return false;
+   
+      BlockNode parent = blockMap.get(new ByteArrayWrapper(b.getPrevBlockHash()));
+      if (parent == null)
+         return false;
+   
+      int newHeight = parent.height + 1;
+      if (newHeight <= maxHeightNode.height - CUT_OFF_AGE)
+         return false;
+   
+      UTXOPool newPool = validateBlockTransactions(b, parent.getUTXOPoolCopy());
+      if (newPool == null)
+         return false;
+   
+      BlockNode node = new BlockNode(b, parent, newPool);
+      blockMap.put(blockHash, node);
+   
+      if (node.height > maxHeightNode.height)
+         maxHeightNode = node;
+   
+      removeIncludedTransactions(b);
+      pruneOldBlocks();
+      return true;
    }
 
    // TODO(Member 3): Add transaction to global transaction pool.
@@ -89,7 +116,32 @@ public class BlockChain {
 
    // TODO(Member 2): Implement obsolete block pruning.
    private void pruneOldBlocks() {
-      throw new UnsupportedOperationException("TODO: Member 2");
+      int cutoffHeight = maxHeightNode.height - CUT_OFF_AGE;
+      ArrayList<ByteArrayWrapper> obsoleteHashes =
+            new ArrayList<ByteArrayWrapper>();
+      ArrayList<BlockNode> retainedNodes = new ArrayList<BlockNode>();
+   
+      for (ByteArrayWrapper hash : blockMap.keySet()) {
+         BlockNode node = blockMap.get(hash);
+         if (node.height < cutoffHeight)
+            obsoleteHashes.add(hash);
+         else
+            retainedNodes.add(node);
+      }
+   
+      for (BlockNode node : retainedNodes) {
+         if (node.parent != null && node.parent.height < cutoffHeight) {
+            node.parent.children.remove(node);
+            node.parent = null;
+         }
+      }
+   
+      for (ByteArrayWrapper hash : obsoleteHashes) {
+         BlockNode obsolete = blockMap.remove(hash);
+         if (obsolete.parent != null)
+            obsolete.parent.children.remove(obsolete);
+         obsolete.children.clear();
+      }
    }
 
    // TODO(Member 3): Validate block transactions and compute UTXO pool.
