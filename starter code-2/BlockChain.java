@@ -40,12 +40,17 @@ public class BlockChain {
       }
    }
 
-   // TODO(Member Khoa Do): Implement the constructor of BlockChain
    /* create an empty block chain with just a genesis block.
     * Assume genesis block is a valid block
     */
    public BlockChain(Block genesisBlock) {
-      throw new UnsupportedOperationException("TODO: Member Khoa Do");
+      UTXOPool genesisPool = new UTXOPool();
+      Transaction coinbaseTx = genesisBlock.getCoinbase();
+      UTXO coinbaseUTXO = new UTXO(coinbaseTx.getHash(), 0);
+      genesisPool.addUTXO(coinbaseUTXO, coinbaseTx.getOutput(0));
+      BlockNode genesisNode = new BlockNode(genesisBlock, null, genesisPool);
+      blockMap.put(new ByteArrayWrapper(genesisBlock.getHash()), genesisNode);
+      maxHeightNode = genesisNode;
    }
 
    /* Get the maximum height block
@@ -67,7 +72,6 @@ public class BlockChain {
       return txPool;
    }
 
-   // TODO(Member 2): Implement block acceptance.
    /* Add a block to block chain if it is valid.
     * For validity, all transactions should be valid
     * and block should be at height > (maxHeight - CUT_OFF_AGE).
@@ -114,7 +118,6 @@ public class BlockChain {
       throw new UnsupportedOperationException("TODO: Member 3");
    }
 
-   // TODO(Member 2): Implement obsolete block pruning.
    private void pruneOldBlocks() {
       int cutoffHeight = maxHeightNode.height - CUT_OFF_AGE;
       ArrayList<ByteArrayWrapper> obsoleteHashes =
